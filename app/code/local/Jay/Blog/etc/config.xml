@@ -26,7 +26,7 @@
 		</blocks>
 		<models>
 			<jay_blog>
-				<class>Jay_blog_Model</class>
+				<class>Jay_Blog_Model</class>
 				<resourceModel>jay_blog_resource</resourceModel>
 			</jay_blog>
 			<jay_blog_resource>
@@ -38,6 +38,17 @@
 				</entities>
 			</jay_blog_resource>
 		</models>
+		<events>
+			<sales_order_save_commit_after>
+				<observers>
+					<jay_blog>
+						<type>singleton</type>
+						<class>Jay_Blog_Model_Observer</class>
+						<method>sendEmail</method>
+					</jay_blog>
+				</observers>
+			</sales_order_save_commit_after>
+		</events>
 	</global>
 	<frontend>
 		<routers>
@@ -56,15 +67,25 @@
 				</jay_blog>
 			</updates>
 		</layout>
+		<events>
+			<sales_quote_add_item>
+				<observers>
+					<jay_blog>
+						<type>singletone</type>
+						<class>Jay_Blog_Model_Observer</class>
+						<method>doubleQty</method>
+					</jay_blog>
+				</observers>
+			</sales_quote_add_item>
+		</events>
 	</frontend>
 	<admin>
 		<routers>
 			<adminhtml>
 				<args>
 					<modules>
-						<jay_blog before='Mage_Adminhtml'>Inchoo_Orders_Adminhtml</jay_blog>
+						<jay_blog before="Mage_Adminhtml">Jay_Blog_Adminhtml</jay_blog>
 					</modules>
-					<frontName>blog</frontName>
 				</args>
 			</adminhtml>
 		</routers>

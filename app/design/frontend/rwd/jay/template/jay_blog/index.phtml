@@ -1,55 +1,39 @@
+<h1>MY Posts</h1>
 
-<?php echo $this->getwelcome (); ?>
-
-<h1>MY Block</h1>
-<form enctype="multipart/form-data" id='my-custom-form'
-	action="<?php echo Mage::getUrl("jayblog/index/view")?>" method="post">
-	<input type="text" name="title" id="" placeholder='title' /> <br /> <input
-		type="text" name="category" id="" placeholder='category' /> <br />
-	<!-- 	 <input type="file" name="fileToUpload" id="fileToUpload"> -->
-	<br />
-	<textarea name="content" id="" cols="30" rows="10"
-		placeholder='post content'></textarea>
-	<br /> <input type="submit" value="Post" />
-</form>
-
-<script type="text/javascript"> <!-- form validation -->
-    //< ![CDATA[
-        var customForm = new VarienForm('my-custom-form');
-    //]]>
-</script>
-
-<h2>Posts</h2>
-<?php
-
-//  $posts = $this->getPosts ();
-
-// foreach ( $posts as $post ) {
-// 	$singlepost = Mage::getModel ( 'jay_blog/myposts' )->load ( $id );
-// 	echo $post->getTitle () . '<br />';
-// 	echo $post->getPostCategory () . '<br />';
-// 	echo $post->getPostContent () . '<br />';
-// }
-
-?>
-<h2>Products</h2>
-<?php
-$products = $this->getProducts ( 'entity_id', 1, 5, 10 );
-foreach ( $products as $k => $v ) {
-	$entity_id = $v->getEntityId ();
-	$product = Mage::getModel ( 'catalog/product' )->load ( $entity_id );
-	echo $product->getEntityId () . '<br />';
-	echo $product->getName () . '<br />';
-	echo $product->getDescription () . '<br />';
-	echo $product->getPrice () . '<br />';
-	echo '<br />**********************************************************<br />';
-}
-
-// var_dump($products);
-
+ <?php
+$blogposts = $this->getPosts();
+$blogViewUrl = Mage::getUrl('jayblog/index/view');
 ?>
 
-
-
+<h2>Blogs List</h2>
+<div class="std">
+	<ol>
+	 <?php foreach ($blogposts as $item): ?>
+	    <li>
+	        <!--  <a href="<?php echo $blogViewUrl; ?>blogpost_id/<?php echo $item->getId(); ?>"></a>  -->
+	            <h3><?php echo $item->getTitle(); ?></h3>
+	            <b><?php echo $item->getCategory(); ?></b>
+	            <p><?php echo $item->getPostContent(); ?></p>
+	        
+	    </li>
+	 <?php endforeach; ?>
+	</ol>
+</div>
+<div class='fieldset'>
+	<h2>Add new post</h2>	
+	<form enctype="multipart/form-data" id='my-custom-form'	action="<?php echo Mage::getUrl("jayblog/index/view")?>" method="post">
+		<input type="text" class="input-text required-entry" name="title" id="" placeholder='title' />
+		<input type="text" class="input-text required-entry" name="category" id="" placeholder='category' />
+		<!-- 	 <input type="file" name="fileToUpload" id="fileToUpload"> -->
+		<textarea name="content" id="" cols="30" rows="10" placeholder='post content'></textarea>
+		<input type="submit" name="post" value="Send" />
+	</form>
+	
+	<script type="text/javascript"> <!-- form validation -->
+	    //< ![CDATA[
+	        var customForm = new VarienForm('my-custom-form');
+	    //]]>
+	</script>
+</div>
 
 
